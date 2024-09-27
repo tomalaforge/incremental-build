@@ -7,9 +7,11 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
+      "dependsOn": ["^build"],
+      "executor": "@nx/angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "buildLibsFromSource": false,
         "outputPath": "dist/apps/demo",
         "index": "apps/demo/src/index.html",
         "browser": "apps/demo/src/main.ts",
@@ -49,7 +51,11 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@nx/angular:dev-server",
+      "options": {
+        "buildTarget": "demo:build",
+        "buildLibsFromSource": false
+      },
       "configurations": {
         "production": {
           "buildTarget": "demo:build:production"
